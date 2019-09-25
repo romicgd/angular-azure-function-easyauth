@@ -1,0 +1,7 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/19fd73ec-c034-4db9-9110-233d99893774/resourceGroups/azr-ist-od-0134-pas-cc-rgp-agrisuite-0000-0c3v/providers/Microsoft.Web/sites/angular-ai-test-win",
+    "appService.deploySubpath": "",
+    "appService.zipIgnorePattern": [
+        ".vscode{,/**}"
+    ]
+}
