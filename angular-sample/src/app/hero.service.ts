@@ -5,12 +5,14 @@ import { Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HeroService {
-  private heroesUrl = 'https://testgrdfunc01.azurewebsites.net/api/testAuth?code=TSyHHi/Uf5mRct7GyMS3rwhhDqZNzGUW1ihCzuZ5KgfgTeZ8dYtryg==';  // URL to Azure function 
+  
+  private heroesUrl = environment.functionURL;  // URL to Azure function 
 
   constructor(
     private http: HttpClient,    
@@ -18,8 +20,8 @@ export class HeroService {
 
   /** GET heroes from the server */
   getHeroes (): Observable<Hero[]> {
-    this.messageService.add('HeroService: fetched heroes over http');
-    this.http.get<Hero[]>(this.heroesUrl, {
+  this.messageService.add('HeroService: fetched heroes over http');
+  this.http.get<Hero[]>(this.heroesUrl, {
       withCredentials: true }).subscribe(
       data => console.log("Payload = ", data) );
     const result = this.http.get<Hero[]>(this.heroesUrl)

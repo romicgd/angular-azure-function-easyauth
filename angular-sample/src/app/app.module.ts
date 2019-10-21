@@ -8,7 +8,8 @@ import { HeroesComponent } from './heroes/heroes.component';
 import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { MessagesComponent } from './messages/messages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InsertAuthTokenInterceptor } from './insert-auth-token-interceptor';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     FormsModule,
     HttpClientModule],
-  providers: [
+    providers: [
+      { provide: HTTP_INTERCEPTORS, useClass: InsertAuthTokenInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
