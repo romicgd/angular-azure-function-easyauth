@@ -1,46 +1,27 @@
-# Angular calls Azure Function protected by Azure AD 
+## Azure Athentication and Intergation: Angular Azure App Service calls Azure Function.  
 
-Demo Angular calls Azure Function protected by Azure AD.
 
-Build on top of Angular [Tour of Heroes App and Tutorial](https://angular.io/tutorial)
+Built on top of Angular [Tour of Heroes App and Tutorial](https://angular.io/tutorial)
 
 To configure
  
-1. Update ```angular-azure-function-aad\angular-sample\src\app\app.module.ts```
-as per [microsoft-adal-angular6](https://www.npmjs.com/package/microsoft-adal-angular6)
+1. Deploy Angular app and Azure function into App Services in Azure.
+2. Create App registration in Azure AD.
+3. Configure Azure App Service Authentication for both Angular and Azure Function App Services using the same App Registration created in #2. (e.g. Use Azure portal or PowerShell)
+4. Configure secret Angular App Service Authentication.
+5. Update ```additionalLoginParams``` in ```authsettings``` section of Angular Website config in [Azure Resource Explorer](https://resources.azure.com/) to include
 
 
-	```typescript
-	  imports: [
-	    BrowserModule,
-	    AppRoutingModule,
-	    FormsModule,
-	    HttpClientModule,
-	    MsAdalAngular6Module.forRoot({
-	      tenant: '<tbd-tenant>',
-	      clientId: '<tbd-clientId>',
-	      redirectUri: window.location.origin,
-	      endpoints: { 
-	        "<called-azure-fuction-url>": "<azue-function-clientId>",
-	      },
-	
-	```   
+```json
+"properties": {
+	...
+    "additionalLoginParams": [
+      "response_type=code id_token",
+      "resource=%YOUR-APP-REGISTRATION-CLIENT-ID%"
+    ]
+	...
+}		
+```   
 
-2. Update ```angular-azure-function-aad\angular-sample\src\app\hero.service.ts```
-
-
-	```javascript
-	export class HeroService {
-	  private heroesUrl = '<called-azure-fuction-url>';  // URL to Azure function 
-	
-	
-	```   
-
-3. Create app registration in Azure
-4. Use created app registration to configure Azure AD authentication for both Angular App and Azure function.     
-
-Note: Even though Azure function is protected by Azure AD keeping Function-level authentication codes.
-Just in case someone makes a mistake and removes AD protection with a single click in Azure portal. 
-
-TBD: load settings from config file
+6. Enjoy your secure application. :)
 
