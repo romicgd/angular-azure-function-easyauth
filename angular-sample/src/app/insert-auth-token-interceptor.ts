@@ -16,10 +16,10 @@ export class InsertAuthTokenInterceptor implements HttpInterceptor {
             return this.http.get("https://testgrd02.azure.ontario-cloud.ca/.auth/me", {
                     withCredentials: true }).pipe(switchMap((response) => {
                       console.log(".auth/me = ", response); 
-                      console.log(`Interceptor Bearer ${response[0].id_token}`);
+                      console.log(`Interceptor Bearer ${response[0].access_token}`);
                     req = req.clone({
                         setHeaders: {
-                            Authorization: `Bearer ${response[0].id_token}`
+                            Authorization: `Bearer ${response[0].access_token}`
                         }
                         });                
                     return next.handle(req);
